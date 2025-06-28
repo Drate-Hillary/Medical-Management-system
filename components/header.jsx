@@ -1,15 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { use } from 'react'
 import { SignedIn, SignInButton, SignUpButton, UserButton, SignedOut } from '@clerk/nextjs'
 import { Button } from "@/components/ui/button";
 import { checkUser } from '@/lib/checkUser'
-import { Calendar, ShieldCheck, Stethoscope, User } from 'lucide-react';
+import { Calendar, CreditCard, ShieldCheck, Stethoscope, User } from 'lucide-react';
+import { Badge } from './ui/badge';
+import { checkAndAllocateCredit } from '@/action/credit';
 
 const Header = async () => {
 
-    const user = await checkUser()
-    await checkAndAllocateCredit(user)
+    const user = await checkUser();
+    if (user?.role === "PATIENT") {
+        await checkAndAllocateCredit(user);
+    }
 
     return (
         <header className='fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-10 supports-[backdrop-filter]:bg-background/60'>
@@ -87,6 +91,28 @@ const Header = async () => {
                             </Link>
                         )}
                     </SignedIn>
+
+                    {(!user || user?.role === "PATIENT") && (
+                        <Link href="/pricing">
+                            <Badge
+                                variant='outline'
+                                className='h-9 bg-emerald-900/20 border-emerald-700/20 px-3 py-1 flex items-center  gap-2'
+                            >
+                                <CreditCard className='h-4 w-4 text-emerald-400' />
+                                <span className='text-emerald-400'>
+                                    {user || user?.role === "PATIENT" ? (
+                                        <>
+                                            {user.credit}{" "}
+                                            <span className='hidden md:inline'>Credits</span>
+                                        </>
+                                    ) : (
+                                        <>Pricing</>
+                                    )}
+
+                                </span>
+                            </Badge>
+                        </Link>
+                    )}
 
                     <SignedOut>
                         <SignInButton>

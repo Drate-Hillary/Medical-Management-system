@@ -12,7 +12,7 @@ const Pricing = () => {
                     appearance:{
                         elements:{
                             drawerRoot:{
-                                zIndex:200
+                                zIndex:2000,
                             }
                         }
                     }
