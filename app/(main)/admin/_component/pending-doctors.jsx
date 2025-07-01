@@ -20,6 +20,7 @@ import Image from 'next/image';
 import { format } from 'date-fns';
 import { Separator } from '@/components/ui/separator';
 import { BarLoader } from 'react-spinners';
+import { toast } from 'sonner';
 
 const PendingDoctors = ({ doctors }) => {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -40,7 +41,8 @@ const PendingDoctors = ({ doctors }) => {
     };
 
     useEffect(()=>{
-        if (data && data?.success) {
+        if (selectedDoctor && data?.success) {
+            toast.success(`Verified Dr. ${selectedDoctor.name} successfully!`)
             handleCloseDialog();
         }
     }, [data]);
