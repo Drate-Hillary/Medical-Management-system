@@ -1,6 +1,6 @@
 "use client";
 
-import { updateDoctorStatus } from '@/action/admin';
+import { updateDoctorStatus } from '@/actions/admin';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

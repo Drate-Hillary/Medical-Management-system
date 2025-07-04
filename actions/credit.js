@@ -74,9 +74,9 @@ export async function checkAndAllocateCredit(user) {
             });
 
             const updatedUser = await tx.user.update({
-                where:{id: user.id},
-                data:{
-                    credit:{
+                where: { id: user.id },
+                data: {
+                    credit: {
                         increment: creditsToAllocate
                     },
                 },
@@ -96,5 +96,70 @@ export async function checkAndAllocateCredit(user) {
             error.message
         );
         return null;
+    }
+}
+
+export async function deductCreditsForAppointment(userId, doctorId) {
+    try {
+        const user = await db.user.findUnique({
+            where: { id: userId },
+        });
+
+        const doctor = await db.user.findUnique({
+            where: { id: doctorId },
+        });
+
+        if (user.credit < appointment_credit_cost) {
+            throw new Error("Insufficient credit to book an appointment.")
+        }
+
+        if (!doctor) {
+            throw new Error("Doctor not found");
+        }
+
+        const result = await db.$transaction(async (tx) => {
+            await tx.creditTransaction.create({
+                data: {
+                    user: user.id,
+                    amount: -appointment_credit_cost,
+                    type: "APPOINTMENT_DEDUCTION",
+                    // description: `Credits deducted for appointment with Dr. ${doctor.name}`
+                }
+            });
+
+            await tx.creditTransaction.create({
+                data: {
+                    user: doctor.id,
+                    amount: appointment_credit_cost,
+                    type: "APPOINTMENT_DEDUCTION",
+                    // description: `Credits deducted for appointment with Dr. ${doctor.name}`
+                }
+            });
+
+            const updatedUser = await tx.user.update({
+                where: { id: user.id },
+                data: {
+                    credit: {
+                        decrement: appointment_credit_cost,
+                    },
+                },
+            });
+
+            await tx.user.update({
+                where: { id: doctor.id },
+                data: {
+                    credit: {
+                        increment: appointment_credit_cost,
+                    },
+                },
+            })
+
+            return updatedUser;
+        });
+
+        return { success: true, user: result };
+
+    } catch (error) {
+        return { success: false, error: error.message };
     }
 }

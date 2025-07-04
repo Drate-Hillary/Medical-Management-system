@@ -1,4 +1,4 @@
-import { getCurrentUser } from '@/action/onboarding'
+import { getCurrentUser } from '@/actions/onboarding'
 import { redirect } from 'next/navigation';
 import React from 'react'
 

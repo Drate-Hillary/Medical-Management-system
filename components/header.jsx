@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { checkUser } from '@/lib/checkUser'
 import { Calendar, CreditCard, ShieldCheck, Stethoscope, User } from 'lucide-react';
 import { Badge } from './ui/badge';
-import { checkAndAllocateCredit } from '@/action/credit';
+import { checkAndAllocateCredit } from '@/actions/credit';
 
 const Header = async () => {
 

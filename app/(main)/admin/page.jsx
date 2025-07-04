@@ -1,4 +1,4 @@
-import { getPendingDoctors, getVerifiedDoctors } from '@/action/admin'
+import { getPendingDoctors, getVerifiedDoctors } from '@/actions/admin'
 import { TabsContent } from '@/components/ui/tabs'
 import React from 'react'
 import PendingDoctors from './_component/pending-doctors';

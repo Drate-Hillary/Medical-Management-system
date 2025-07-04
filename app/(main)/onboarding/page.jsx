@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/c
 import { Button } from '@/components/ui/button';
 import { Loader2, Stethoscope, User } from 'lucide-react';
 import useFetch from '@/hooks/use-fetch';
-import { setUserRole } from '@/action/onboarding';
+import { setUserRole } from '@/actions/onboarding';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';

@@ -1,4 +1,4 @@
-import { verifyAdmin } from '@/action/admin'
+import { verifyAdmin } from '@/actions/admin'
 import PageHeader from '@/components/page-header';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AlertCircle, ShieldCheck, Users } from 'lucide-react';
@@ -23,7 +23,7 @@ const AdminLayout = async ({ children }) => {
             <PageHeader icon={<ShieldCheck />} title={"Admin Setting"} />
 
             <Tabs
-                defaultValue="account"
+                defaultValue="pending"
                 className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-2"
             >
                 <TabsList

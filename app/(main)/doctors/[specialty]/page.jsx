@@ -1,4 +1,4 @@
-import { getDoctorsBySpecialty } from '@/action/doctors-listing';
+import { getDoctorsBySpecialty } from '@/actions/doctors-listing';
 import DoctorCard from '@/components/doctor-card';
 import PageHeader from '@/components/page-header'
 import { redirect } from 'next/navigation';
@@ -30,8 +30,7 @@ const SpecialtyPage = async ({ params }) => {
                     {doctors.map(doctor => (
                         <DoctorCard key={doctor.id} doctor={doctor} />
                     ))}
-                    cons
-                </div>
+                </div> 
             ) : (
                 <div className="text-center py-12">
                     <h3 className="text-xl font-medium text-white mb-2">
